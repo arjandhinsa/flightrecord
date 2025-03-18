@@ -14,7 +14,7 @@ class RecordManager:
         return {"Clients": [], "Flights": [], "Airline Companies": []}
 
     def save_records(self):
-        with open(FILE_NAME, "w") as file:
+        with open(FILE_NAME, "w", encoding="utf-8") as file: #updated encoding to utf-8, as it is the default encoding for json files, Ali Sabt 18th of march 2025.
             json.dump(self.records, file, indent=4)
 
     def generate_id(self, category):
