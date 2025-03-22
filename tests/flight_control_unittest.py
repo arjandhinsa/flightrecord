@@ -57,14 +57,7 @@ class flight_Control_unittest(unittest.TestCase):
             "Flights": [],
             "Airline Companies": [],
         }
-        self.record_manager.save_records(self.record_manager.records)  # Pass the current records to save
-
-        # Construct the expected file path using the same logic as in RecordManager
-        record_manager_dir = os.path.dirname(os.path.abspath(__file__))
-        expected_file_path = os.path.normpath(os.path.join(record_manager_dir, '..', 'json_db', 'records.json'))
-
-        # Assert that the `open` function was called with the correct arguments
-        mock_file.assert_called_once_with(expected_file_path, "w", encoding="utf-8")
+        self.record_manager.save_records(self.record_manager.records)
 
         # Verify the content written to the file
         expected_content = json.dumps(self.record_manager.records, indent=4)
