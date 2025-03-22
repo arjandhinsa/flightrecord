@@ -11,7 +11,7 @@ if parent_dir not in sys.path:
     sys.path.insert(0, parent_dir)
 
 try:
-    from record_manager import RecordManager  # Import from parent directory
+    from src.recordmanager.record_manager import RecordManager  # Import from parent directory
 except ModuleNotFoundError as e:
     raise ImportError(f"Unable to import 'record_manager': {e}. Ensure 'record_manager.py' exists in the parent directory and is correctly named.")
 
