@@ -71,9 +71,9 @@ Flight Manager is a desktop application to manage flight records, clients, and a
 Unit and Performance tests are provided in the `tests` directory. You can run them using:
 
 ```bash
-python flight_control_performance _2.py
+python flight_control_performance_2.py
 python flight_control_performance.py
-python flight_control_performance_unittest.py
+python flight_control_unittest.py
 ```
 
 
