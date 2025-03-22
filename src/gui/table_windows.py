@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-from .popup_windows import AddRecordPopup, DeleteConfirmationPopup
+from .popup_windows import AddRecordPopup, DeleteConfirmationPopup, EditRecordPopup
 
 class TableWindow(tk.Toplevel):
     """
@@ -60,9 +60,13 @@ class TableWindow(tk.Toplevel):
         btn_frame = tk.Frame(self, bg=bg_color)
         btn_frame.pack(pady=10)
 
-        # Add and delete buttons
+        # Add, edit, and delete buttons
         add_button = tk.Button(btn_frame, text=f"Add {record_type}", font=("Arial", 12), bg="#87CEFA", command=self.add_record)
         add_button.pack(side="left", padx=5)
+
+        # Add this in the __init__ method of TableWindow, after the Add and Delete buttons
+        edit_button = tk.Button(btn_frame, text=f"Edit {record_type}", font=("Arial", 12), bg="#FFD700", command=self.edit_record)
+        edit_button.pack(side="left", padx=5)
 
         delete_button = tk.Button(btn_frame, text=f"Delete {record_type}", font=("Arial", 12), bg="#FF6961", command=self.confirm_delete)
         delete_button.pack(side="right", padx=5)
@@ -120,6 +124,39 @@ class TableWindow(tk.Toplevel):
         Opens the AddRecordPopup to add a new record.
         """
         AddRecordPopup(self, self.record_type, self.record_manager, self.update_tree)
+
+    def edit_record(self):
+        """
+        Opens the EditRecordPopup to edit the selected record.
+        """
+        selected_item = self.tree.selection()
+        if selected_item:
+            record_id = int(selected_item[0])
+            EditRecordPopup(self, self.record_type, self.record_manager, record_id, self.update_tree_after_edit)
+
+    def update_tree(self, new_record):
+        """
+        Updates the treeview with a new record.
+
+        Args:
+            new_record (dict): The new record to add.
+        """
+        check_var = tk.BooleanVar()
+        self.check_vars[new_record["ID"]] = check_var
+        values = [new_record.get(col, "") for col in self.get_columns()]
+        self.tree.insert("", "end", iid=new_record["ID"], values=values)
+        self.create_checkbutton(new_record["ID"])
+
+    def update_tree_after_edit(self, updated_record):
+        """
+        Updates the treeview with the edited record.
+
+        Args:
+            updated_record (dict): The updated record.
+        """
+        if updated_record:
+            values = [updated_record.get(col, "") for col in self.get_columns()]
+            self.tree.item(updated_record["ID"], values=values)
 
     def update_tree(self, new_record):
         """
