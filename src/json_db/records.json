@@ -1,0 +1,50 @@
+{
+    "Clients": [
+        {
+            "ID": 1001,
+            "name": "John Doe",
+            "email": "johndoe@example.com",
+            "phone": "+1234567890"
+        },
+        {
+            "ID": 1002,
+            "name": "Jane Smith",
+            "email": "janesmith@example.com",
+            "phone": "+0987654321"
+        }
+    ],
+    "Flights": [
+        {
+            "ID": 2001,
+            "flight_number": "AA123",
+            "departure": "2025-03-10 10:00",
+            "arrival": "2025-03-10 14:00",
+            "departure_city": "New York",
+            "arrival_city": "Los Angeles"
+        },
+        {
+            "ID": 2003,
+            "flight_number": "SDADA",
+            "arrival_time": "DASDAS",
+            "departure_city": "DASDAS",
+            "arrival_city": "DASSDA"
+        }
+    ],
+    "Airline Companies": [
+        {
+            "ID": 3001,
+            "name": "American Airlines",
+            "headquarters": "Fort Worth, Texas"
+        },
+        {
+            "ID": 3002,
+            "name": "Delta Airlines",
+            "headquarters": "Atlanta, Georgia"
+        },
+        {
+            "ID": 3003,
+            "name": "DASDAS",
+            "headquarters": "DASDAS"
+        }
+    ]
+}

@@ -11,11 +11,15 @@ if parent_dir not in sys.path:
     sys.path.insert(0, parent_dir)
 
 try:
-    from record_manager import RecordManager  # Import from parent directory
+    from src.recordmanager.record_manager import RecordManager  # Import from parent directory
 except ModuleNotFoundError as e:
     raise ImportError(f"Unable to import 'record_manager': {e}. Ensure 'record_manager.py' exists in the parent directory and is correctly named.")
 
-FILE_NAME = "records.json"
+# Get the directory of the current file
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Construct the absolute path to the JSON file
+FILE_NAME = os.path.join(current_dir, '..', 'src', 'json_db', 'records.json')
 
 
 class flight_Control_unittest(unittest.TestCase):
@@ -53,11 +57,17 @@ class flight_Control_unittest(unittest.TestCase):
             "Flights": [],
             "Airline Companies": [],
         }
-        self.record_manager.save_records()
+        self.record_manager.save_records(self.record_manager.records)  # Pass the current records to save
+
+        # Construct the expected file path using the same logic as in RecordManager
+        record_manager_dir = os.path.dirname(os.path.abspath(__file__))
+        expected_file_path = os.path.normpath(os.path.join(record_manager_dir, '..', 'json_db', 'records.json'))
+
         # Assert that the `open` function was called with the correct arguments
-        mock_file.assert_called_once_with(FILE_NAME, "w", encoding="utf-8")
+        mock_file.assert_called_once_with(expected_file_path, "w", encoding="utf-8")
+
         # Verify the content written to the file
-        expected_content = json.dumps(self.record_manager.records, indent=4)																				
+        expected_content = json.dumps(self.record_manager.records, indent=4)
         written_content = ''.join(call.args[0] for call in mock_file().write.call_args_list)
         self.assertEqual(written_content, expected_content)
         
